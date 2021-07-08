@@ -19,7 +19,7 @@ import java.util.Optional;
 @Setter
 public abstract class PaginatedGUI extends GUI {
 
-    public static ItemStack PAGINATED_GUI_FILLER = new ItemStack(Material.STAINED_GLASS_PANE);
+    public static ItemStack PAGINATED_GUI_FILLER = new ItemStack(Material.AIR);
 
     protected int maxPage;
     protected int maxElements;
