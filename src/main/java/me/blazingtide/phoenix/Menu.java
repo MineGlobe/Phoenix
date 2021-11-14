@@ -49,6 +49,10 @@ public abstract class Menu {
         buttons = new Button[size];
     }
 
+    public Menu(Player player, String title, MenuSize size) {
+        this(player, title, size.getValue());
+    }
+
     public ButtonPopulator populator() {
         return new ButtonPopulatorImpl().menu(this).player(player);
     }
