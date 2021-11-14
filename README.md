@@ -6,24 +6,6 @@ Extensive GUI / Inventory API for the Spigot API
 2. Add the project as a maven dependency or put it in your build path.
 3. Start using the API!
 
-You can also use maven:
-
-```
-<repositories>
-   	<repository>
-   		<id>jitpack.io</id>
-   		<url>https://jitpack.io</url>
-   </repository>
-</repositories>
-
-<dependency>
-    <groupId>me.blazingtide</groupId>
-    <artifactId>Zetsu</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <scope>compile</scope>
-</dependency>
-```
-
 ### Usage
 
 ```java
