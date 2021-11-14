@@ -3,6 +3,8 @@ package me.blazingtide.phoenix;
 import lombok.Getter;
 import me.blazingtide.phoenix.button.Button;
 import me.blazingtide.phoenix.button.IButton;
+import me.blazingtide.phoenix.populator.ButtonPopulator;
+import me.blazingtide.phoenix.populator.ButtonPopulatorImpl;
 import me.blazingtide.phoenix.result.TickResult;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -34,6 +36,7 @@ public abstract class GUI {
     protected final String title;
     protected final int size;
 
+    @Deprecated
     protected final IButton[] buttons;
 
     protected long lastTick;
@@ -48,6 +51,10 @@ public abstract class GUI {
         buttons = new Button[size];
     }
 
+    public ButtonPopulator populator() {
+        return new ButtonPopulatorImpl();
+    }
+
     public String getID() {
         return this.getClass().getSimpleName();
     }
@@ -58,13 +65,9 @@ public abstract class GUI {
      * and to set the buttons to update the GUI
      * <p>
      * Usage:
-     * <ul>
-     *     <li>buttons[index] = new Button(player, this, itemStack, consumer)</li>
-     * </ul>
-     *
-     * @return optional of weather the tick event failed just in case some error happened, we can prevent any other inventories from being affected
+     * {@see me.blazingtide.phoenix.populator.ButtonPopulator}
      */
-    public abstract Optional<TickResult> onTick();
+    public abstract void draw();
 
     /**
      * Called whenever a player clicks an item in their inventory
@@ -112,18 +115,7 @@ public abstract class GUI {
      * <strong>REMINDER: This method is VERY async</strong>
      */
     public final void update() {
-        Optional<TickResult> result;
-        try {
-            result = onTick();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
-        if (result.isPresent() && result.get() != TickResult.SUCCESS) {
-            return;
-        }
-
+        draw();
         final List<IButton> array = Arrays.asList(this.buttons);
 
         //We want to use a parallel stream because we want it to update as fast as possible without any latency

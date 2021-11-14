@@ -5,7 +5,6 @@ import lombok.Setter;
 import me.blazingtide.phoenix.GUI;
 import me.blazingtide.phoenix.button.Button;
 import me.blazingtide.phoenix.button.builder.ButtonBuilder;
-import me.blazingtide.phoenix.result.TickResult;
 import me.blazingtide.phoenix.pagination.button.PaginatedButton;
 import me.blazingtide.phoenix.pagination.button.PaginationType;
 import org.bukkit.Material;
@@ -13,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
-import java.util.Optional;
 
 @Getter
 @Setter
@@ -42,7 +40,7 @@ public abstract class PaginatedGUI extends GUI {
     public abstract List<Button> getPageButtons();
 
     @Override
-    public Optional<TickResult> onTick() {
+    public void draw() {
         int start = (page - 1) * maxElements;
         int end = start + maxElements;
 
@@ -65,7 +63,5 @@ public abstract class PaginatedGUI extends GUI {
         if (page == maxPage) {
             buttons[size - 1] = new PaginatedButton(player, this, PaginationType.NEXT_PAGE);
         }
-
-        return Optional.empty();
     }
 }
