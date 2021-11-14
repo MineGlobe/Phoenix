@@ -1,6 +1,6 @@
 package me.blazingtide.phoenix.populator;
 
-import me.blazingtide.phoenix.GUI;
+import me.blazingtide.phoenix.Menu;
 import me.blazingtide.phoenix.button.builder.ButtonBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -16,10 +16,10 @@ public class ButtonPopulatorImpl implements ButtonPopulator {
     private Consumer<InventoryClickEvent> consumer = ignored -> {
     };
     private Player player;
-    private GUI menu;
+    private Menu menu;
 
     @Override
-    public ButtonPopulator menu(GUI menu) {
+    public ButtonPopulator menu(Menu menu) {
         Objects.requireNonNull(menu);
         this.menu = menu;
         return this;

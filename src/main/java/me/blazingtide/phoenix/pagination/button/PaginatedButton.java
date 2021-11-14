@@ -1,14 +1,15 @@
 package me.blazingtide.phoenix.pagination.button;
 
 import me.blazingtide.phoenix.button.Button;
-import me.blazingtide.phoenix.pagination.PaginatedGUI;
+import me.blazingtide.phoenix.pagination.PaginatedMenu;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class PaginatedButton extends Button {
 
-    public PaginatedButton(Player player, PaginatedGUI gui, PaginationType type) {
-        super(player, gui, type.getItem(), event -> {
-            if (type == PaginationType.NEXT_PAGE) {
+    public PaginatedButton(Player player, PaginatedMenu gui, ItemStack item, boolean nextPage) {
+        super(player, gui, item, event -> {
+            if (nextPage) {
                 if (gui.getMaxPage() < gui.getPage()) {
                     gui.setPage(gui.getMaxPage());
                     return;

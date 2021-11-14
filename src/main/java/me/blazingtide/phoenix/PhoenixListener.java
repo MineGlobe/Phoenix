@@ -15,15 +15,15 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PhoenixListener implements Listener {
 
-    private final Map<UUID, GUI> guis;
+    private final Map<UUID, Menu> menus;
 
     @EventHandler
     public void onOpen(InventoryOpenEvent event) {
         final HumanEntity player = event.getPlayer();
 
         //We can assume that the player's open GUI is the same GUI that we store in the Map.
-        if (guis.containsKey(player.getUniqueId())) {
-            guis.get(player.getUniqueId()).onOpen(event);
+        if (menus.containsKey(player.getUniqueId())) {
+            menus.get(player.getUniqueId()).onOpen(event);
         }
     }
 
@@ -32,8 +32,8 @@ public class PhoenixListener implements Listener {
         final HumanEntity player = event.getPlayer();
 
         //We can assume that the player's open GUI is the same GUI that we store in the Map.
-        if (guis.containsKey(player.getUniqueId())) {
-            guis.remove(player.getUniqueId()).onClose(event);
+        if (menus.containsKey(player.getUniqueId())) {
+            menus.remove(player.getUniqueId()).onClose(event);
         }
     }
 
@@ -41,17 +41,17 @@ public class PhoenixListener implements Listener {
     public void onClick(InventoryClickEvent event) {
         final HumanEntity player = event.getWhoClicked();
 
-        if (guis.containsKey(player.getUniqueId())) {
-            final GUI gui = guis.get(player.getUniqueId());
+        if (menus.containsKey(player.getUniqueId())) {
+            final Menu menu = menus.get(player.getUniqueId());
 
-            gui.onClickRaw(event);
+            menu.onClickRaw(event);
 
             if (player.getOpenInventory() == null || event.getClickedInventory() == null) {
                 return;
             }
 
             if (event.getClickedInventory().equals(player.getOpenInventory().getTopInventory())) {
-                IButton button = gui.getButtons()[event.getRawSlot()];
+                IButton button = menu.getButtons()[event.getRawSlot()];
 
                 if (button != null) {
                     if (button.isAutoCancelEvent()) {
@@ -60,7 +60,7 @@ public class PhoenixListener implements Listener {
                     button.onClick(event);
                 }
             } else if (event.getClickedInventory().equals(player.getOpenInventory().getBottomInventory()) && event.getCurrentItem() != null) {
-                gui.onPlayerInventoryClick(event);
+                menu.onPlayerInventoryClick(event);
             }
         }
     }

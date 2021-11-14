@@ -2,7 +2,7 @@ package me.blazingtide.phoenix.button;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.blazingtide.phoenix.GUI;
+import me.blazingtide.phoenix.Menu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -13,16 +13,16 @@ import java.util.function.Consumer;
 public class Button implements IButton {
 
     private final Player player;
-    private final GUI gui;
+    private final Menu menu;
     private final ItemStack item;
     private final Consumer<InventoryClickEvent> clickConsumer;
 
     @Setter
     private boolean autoCancelEvent = true;
 
-    public Button(Player player, GUI gui, ItemStack item, Consumer<InventoryClickEvent> clickConsumer) {
+    public Button(Player player, Menu menu, ItemStack item, Consumer<InventoryClickEvent> clickConsumer) {
         this.player = player;
-        this.gui = gui;
+        this.menu = menu;
         this.item = item;
         this.clickConsumer = clickConsumer;
     }

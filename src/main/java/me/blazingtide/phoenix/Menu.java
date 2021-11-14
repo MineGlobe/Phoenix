@@ -5,7 +5,6 @@ import me.blazingtide.phoenix.button.Button;
 import me.blazingtide.phoenix.button.IButton;
 import me.blazingtide.phoenix.populator.ButtonPopulator;
 import me.blazingtide.phoenix.populator.ButtonPopulatorImpl;
-import me.blazingtide.phoenix.result.TickResult;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -17,11 +16,10 @@ import org.bukkit.inventory.Inventory;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Getter
-public abstract class GUI {
+public abstract class Menu {
 
     /**
      * Basically how long until the GUI autoupdates for the player.
@@ -43,7 +41,7 @@ public abstract class GUI {
 
     protected Inventory inventory;
 
-    public GUI(Player player, String title, int size) {
+    public Menu(Player player, String title, int size) {
         this.player = player;
         this.title = ChatColor.translateAlternateColorCodes('&', title);
         this.size = size;
@@ -52,7 +50,7 @@ public abstract class GUI {
     }
 
     public ButtonPopulator populator() {
-        return new ButtonPopulatorImpl();
+        return new ButtonPopulatorImpl().menu(this).player(player);
     }
 
     public String getID() {
@@ -142,9 +140,9 @@ public abstract class GUI {
         player.openInventory(inventory);
 
         if (PHOENIX != null) {
-            PHOENIX.getOpenGUIS().put(player.getUniqueId(), this);
+            PHOENIX.getOpenmenus().put(player.getUniqueId(), this);
         } else {
-            Bukkit.getLogger().severe(Phoenix.PREFIX + "Attempted to open a GUI without having Phoenix initialized.");
+            Bukkit.getLogger().severe("Attempted to open a GUI without having Phoenix initialized.");
         }
     }
 

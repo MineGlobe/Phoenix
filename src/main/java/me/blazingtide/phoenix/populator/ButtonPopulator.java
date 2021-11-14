@@ -1,6 +1,6 @@
 package me.blazingtide.phoenix.populator;
 
-import me.blazingtide.phoenix.GUI;
+import me.blazingtide.phoenix.Menu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 
 public interface ButtonPopulator {
 
-    ButtonPopulator menu(GUI menu);
+    ButtonPopulator menu(Menu menu);
 
     ButtonPopulator slot(int slot);
 

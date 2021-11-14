@@ -1,6 +1,6 @@
 package me.blazingtide.phoenix.button.builder;
 
-import me.blazingtide.phoenix.GUI;
+import me.blazingtide.phoenix.Menu;
 import me.blazingtide.phoenix.button.Button;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 public class ButtonBuilder {
 
     private ItemStack item;
-    private GUI gui;
+    private Menu menu;
     private Consumer<InventoryClickEvent> clickConsumer = event -> {
     };
 
@@ -20,8 +20,8 @@ public class ButtonBuilder {
         return this;
     }
 
-    public ButtonBuilder withGUI(GUI gui) {
-        this.gui = gui;
+    public ButtonBuilder withGUI(Menu menu) {
+        this.menu = menu;
         return this;
     }
 
@@ -32,7 +32,7 @@ public class ButtonBuilder {
     }
 
     public Button build(Player player) {
-        return new Button(player, gui, item, clickConsumer);
+        return new Button(player, menu, item, clickConsumer);
     }
 
 }

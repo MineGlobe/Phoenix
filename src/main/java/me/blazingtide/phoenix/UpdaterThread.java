@@ -13,7 +13,7 @@ public class UpdaterThread extends BukkitRunnable {
 
     @Override
     public void run() {
-        //Made it a parallel stream to prevent any latency with updating GUIs just in case you got a server with like 2k GUIs open.
-        phoenix.getOpenGUIS().values().parallelStream().filter(gui -> gui.isAutoUpdating() && (gui.getLastTick() + gui.getUpdateTick() - System.currentTimeMillis() <= 0)).forEach(GUI::update);
+        //Made it a parallel stream to prevent any latency with updating menus just in case you got a server with like 2k menus open.
+        phoenix.getOpenmenus().values().parallelStream().filter(gui -> gui.isAutoUpdating() && (gui.getLastTick() + gui.getUpdateTick() - System.currentTimeMillis() <= 0)).forEach(Menu::update);
     }
 }

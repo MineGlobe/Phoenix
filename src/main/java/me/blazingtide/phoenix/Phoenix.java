@@ -11,18 +11,17 @@ import java.util.UUID;
 /**
  * I made this class static since I only want 1 instance of the GUI handler at all times.
  * So, each plugin should not be creating their own instances which will prevent overlaping of
- * GUIS.
+ * menus.
  */
 @Getter
 public class Phoenix {
 
-    static final String PREFIX = "[Phoenix GUI library] ";
     /**
      * Since we're going to be using multiple threads at the same time
-     * when attempting to update GUIS for players, Concurrent HashMap will ensure that
+     * when attempting to update menus for players, Concurrent HashMap will ensure that
      * there are 0 complications.
      */
-    private final Map<UUID, GUI> openGUIS = Maps.newConcurrentMap();
+    private final Map<UUID, Menu> openmenus = Maps.newConcurrentMap();
     private final JavaPlugin plugin;
 
     private UpdaterThread updater;
@@ -31,9 +30,8 @@ public class Phoenix {
         this.plugin = plugin;
         this.updater = new UpdaterThread(this);
 
-        Bukkit.getLogger().info(PREFIX + "Attempting to register the library.");
-        Bukkit.getPluginManager().registerEvents(new PhoenixListener(openGUIS), plugin);
-        GUI.PHOENIX = this;
+        Bukkit.getPluginManager().registerEvents(new PhoenixListener(openmenus), plugin);
+        Menu.PHOENIX = this;
     }
 
 }
