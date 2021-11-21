@@ -1,5 +1,4 @@
 # Phoenix
-Extensive GUI / Inventory API for the Spigot API
 
 ### Installation
 1. Retrieve the jar from releases or compile the plugin via git and maven.
@@ -22,18 +21,18 @@ public void onEnable() {
 
 ```java
 
-class ExampleGUI extends GUI {
+import me.blazingtide.phoenix.Menu;
+
+class ExampleMenu extends Menu {
 }
 
 ```
 
 ```java
-public Optional<TickResult> onTick() {
-  button[index] = new Button()
+public void draw() {
+    populator()
+        .slot(slot)
+        .item(new ItemStack(Material.DIAMOND_SWORD))
+        .create()
 }
-
 ```
-
-### Contact
-**Telegram**: @BlazingTide
-**Discord**:  BlazingTide#3817
