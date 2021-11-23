@@ -1,6 +1,7 @@
 package me.blazingtide.phoenix.populator;
 
 import me.blazingtide.phoenix.Menu;
+import me.blazingtide.phoenix.button.IButton;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -19,6 +20,6 @@ public interface ButtonPopulator {
 
     ButtonPopulator item(ItemStack item);
 
-    void create();
+    IButton create();
 
 }

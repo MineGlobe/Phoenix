@@ -1,6 +1,7 @@
 package me.blazingtide.phoenix.populator;
 
 import me.blazingtide.phoenix.Menu;
+import me.blazingtide.phoenix.button.IButton;
 import me.blazingtide.phoenix.button.builder.ButtonBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -54,12 +55,12 @@ public class ButtonPopulatorImpl implements ButtonPopulator {
 
 
     @Override
-    public void create() {
+    public IButton create() {
         Objects.requireNonNull(player, "Player is null");
         Objects.requireNonNull(menu, "Menu is null");
         Objects.requireNonNull(item, "Item is null");
 
-        menu.getButtons()[slot] = new ButtonBuilder()
+        return menu.getButtons()[slot] = new ButtonBuilder()
                 .withGUI(menu)
                 .withItem(item)
                 .onClick(consumer)
