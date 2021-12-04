@@ -37,8 +37,6 @@ public abstract class Menu {
     @Deprecated
     protected final IButton[] buttons;
 
-    protected long lastTick;
-
     protected Inventory inventory;
 
     public Menu(Player player, String title, int size) {
@@ -55,10 +53,6 @@ public abstract class Menu {
 
     public ButtonPopulator populator() {
         return new ButtonPopulatorImpl().menu(this).player(player);
-    }
-
-    public String getID() {
-        return this.getClass().getSimpleName();
     }
 
     /**
@@ -120,9 +114,7 @@ public abstract class Menu {
         draw();
         final List<IButton> array = Arrays.asList(this.buttons);
 
-        //We want to use a parallel stream because we want it to update as fast as possible without any latency
-        array.parallelStream().filter(Objects::nonNull).forEachOrdered(button -> inventory.setItem(array.indexOf(button), button.getItem()));
-        lastTick = System.currentTimeMillis();
+        array.stream().filter(Objects::nonNull).forEachOrdered(button -> inventory.setItem(array.indexOf(button), button.getItem()));
     }
 
     public long getUpdateTick() {
