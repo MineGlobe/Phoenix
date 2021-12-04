@@ -37,6 +37,8 @@ public abstract class Menu {
     @Deprecated
     protected final IButton[] buttons;
 
+    protected long lastTick;
+
     protected Inventory inventory;
 
     public Menu(Player player, String title, int size) {
@@ -115,6 +117,7 @@ public abstract class Menu {
         final List<IButton> array = Arrays.asList(this.buttons);
 
         array.stream().filter(Objects::nonNull).forEachOrdered(button -> inventory.setItem(array.indexOf(button), button.getItem()));
+        lastTick = System.currentTimeMillis();
     }
 
     public long getUpdateTick() {
