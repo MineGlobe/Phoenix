@@ -4,6 +4,6 @@ node {
    }
 
    stage('Build') {
-       sh "mvn clean install -U"
+       sh "/var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/maven/bin/mvn clean install -U"
    }
 }
