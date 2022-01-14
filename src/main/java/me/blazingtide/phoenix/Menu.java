@@ -174,7 +174,12 @@ public abstract class Menu {
      * @return slot
      */
     public int firstEmpty() {
-        return inventory.firstEmpty();
+        for (int i = 0; i < size; i++) {
+            if (buttons[i] == null) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }
