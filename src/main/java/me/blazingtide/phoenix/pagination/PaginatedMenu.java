@@ -31,7 +31,7 @@ public abstract class PaginatedMenu extends Menu {
         super(player, title, size);
 
         elements = getPageButtons();
-        maxElements = size - 9;
+        maxElements = getSlots().length;
 
         maxPage = elements.size() / maxElements + 1;
     }
