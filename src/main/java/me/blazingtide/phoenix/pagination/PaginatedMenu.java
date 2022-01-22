@@ -42,13 +42,14 @@ public abstract class PaginatedMenu extends Menu {
     public void draw() {
         int start = (page - 1) * maxElements;
         int end = start + maxElements;
+        final int[] slots = getSlots();
 
         int index = 0;
         for (int i = start; i < end; i++) {
             if (elements.size() <= i) {
                 continue;
             }
-            buttons[index] = elements.get(i);
+            buttons[slots[index]] = elements.get(i);
             index++;
         }
 
@@ -64,7 +65,18 @@ public abstract class PaginatedMenu extends Menu {
         }
     }
 
+    protected int[] getSlots() {
+        final int[] toReturn = new int[size];
+
+        for (int i = 0; i < toReturn.length; i++) {
+            toReturn[i] = i;
+        }
+
+        return toReturn;
+    }
+
     public abstract ItemStack getNextPageItem();
+
     public abstract ItemStack getPreviousPageItem();
 
 }
