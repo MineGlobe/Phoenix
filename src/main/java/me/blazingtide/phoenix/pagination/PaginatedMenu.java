@@ -49,12 +49,22 @@ public abstract class PaginatedMenu extends Menu {
             index++;
         }
 
+        if (shouldDrawPaginatedButtons()) {
+            drawPaginationButtons();
+        }
+    }
+
+    protected void drawPaginationButtons() {
         if (page <= 1) {
             buttons[size - 9] = new PaginatedButton(player, this, getPreviousPageItem(), false);
         }
         if (page == maxPage) {
             buttons[size - 1] = new PaginatedButton(player, this, getNextPageItem(), true);
         }
+    }
+
+    public boolean shouldDrawPaginatedButtons() {
+        return true;
     }
 
     protected int[] getSlots() {
