@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.blazingtide.phoenix.Menu;
 import me.blazingtide.phoenix.button.Button;
-import me.blazingtide.phoenix.button.builder.ButtonBuilder;
 import me.blazingtide.phoenix.pagination.button.PaginatedButton;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,8 +13,6 @@ import java.util.List;
 @Getter
 @Setter
 public abstract class PaginatedMenu extends Menu {
-
-    public static ItemStack PAGINATED_GUI_FILLER = new ItemStack(Material.AIR);
 
     protected int maxPage;
     protected int maxElements;
@@ -51,10 +47,6 @@ public abstract class PaginatedMenu extends Menu {
             }
             buttons[slots[index]] = elements.get(i);
             index++;
-        }
-
-        for (int i = size - 9; i < size; i++) {
-            buttons[i] = new ButtonBuilder().withGUI(this).withItem(PAGINATED_GUI_FILLER).build(player);
         }
 
         if (page <= 1) {
