@@ -74,6 +74,7 @@ public abstract class Menu {
      * @param event which is called.
      */
     public void onPlayerInventoryClick(InventoryClickEvent event) {
+        event.setCancelled(true);
     }
 
     /**
