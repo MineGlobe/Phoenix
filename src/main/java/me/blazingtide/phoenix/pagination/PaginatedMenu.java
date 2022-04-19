@@ -14,8 +14,8 @@ import java.util.List;
 @Setter
 public abstract class PaginatedMenu extends Menu {
 
-    protected int maxPage;
-    protected int maxElements;
+    private int maxPage;
+    private int maxElements;
     protected int page = 1;
     private List<Button> elements;
 
