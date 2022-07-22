@@ -21,16 +21,16 @@ public class Phoenix {
      * when attempting to update menus for players, Concurrent HashMap will ensure that
      * there are 0 complications.
      */
-    private final Map<UUID, Menu> openmenus = Maps.newConcurrentMap();
+    private final Map<UUID, Menu> openMenus = Maps.newConcurrentMap();
     private final JavaPlugin plugin;
 
-    private UpdaterThread updater;
+    private final UpdaterThread updater;
 
     public Phoenix(JavaPlugin plugin) {
         this.plugin = plugin;
         this.updater = new UpdaterThread(this);
 
-        Bukkit.getPluginManager().registerEvents(new PhoenixListener(openmenus), plugin);
+        Bukkit.getPluginManager().registerEvents(new PhoenixListener(openMenus), plugin);
         Menu.PHOENIX = this;
     }
 
