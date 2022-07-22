@@ -140,14 +140,14 @@ public abstract class Menu {
         player.openInventory(inventory);
 
         if (PHOENIX != null) {
-            PHOENIX.getOpenmenus().put(player.getUniqueId(), this);
+            PHOENIX.getOpenMenus().put(player.getUniqueId(), this);
         } else {
-            Bukkit.getLogger().severe("Attempted to open a GUI without having Phoenix initialized.");
+            PHOENIX.getPlugin().getLogger().severe("[Phoenix] Attempted to open a GUI without having Phoenix initialized.");
         }
     }
 
     /**
-     * Creates a inventory which we can use for the player
+     * Creates an inventory which we can use for the player
      * This method is not final since we want to be able to support
      * multiple inventory types.
      *

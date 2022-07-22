@@ -64,7 +64,7 @@ public abstract class PaginatedMenu extends Menu {
     }
 
     protected int[] getSlots() {
-        final int[] toReturn = new int[size];
+        final int[] toReturn = new int[size - 9];
 
         for (int i = 0; i < toReturn.length; i++) {
             toReturn[i] = i;
