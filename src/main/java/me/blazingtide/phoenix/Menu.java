@@ -158,6 +158,16 @@ public abstract class Menu {
     }
 
     /**
+     * Clears the entire menu
+     * However, it doesn't call update method.
+     * <p>
+     * You'll have to update the menu manually.
+     */
+    public void clear() {
+        Arrays.fill(buttons, null);
+    }
+
+    /**
      * Determines weather a GUI should update automatically depending on the
      * update speed.
      *

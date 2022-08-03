@@ -36,6 +36,8 @@ public abstract class PaginatedMenu extends Menu {
 
     @Override
     public void draw() {
+        clear();
+
         int start = (page - 1) * maxElements;
         int end = start + maxElements;
         final int[] slots = getSlots();
