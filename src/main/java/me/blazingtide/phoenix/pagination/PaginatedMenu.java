@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import me.blazingtide.phoenix.Menu;
 import me.blazingtide.phoenix.button.Button;
-import me.blazingtide.phoenix.pagination.button.PaginatedButton;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -57,8 +56,15 @@ public abstract class PaginatedMenu extends Menu {
     }
 
     protected void drawPaginationButtons() {
-        buttons[size - 9] = new PaginatedButton(player, this, getPreviousPageItem(), false);
-        buttons[size - 1] = new PaginatedButton(player, this, getNextPageItem(), true);
+        populator()
+                .slot(size - 9)
+                .item(getPreviousPageItem())
+                .clicked(event -> page = Math.max(1, page - 1)).create();
+
+        populator()
+                .slot(size - 1)
+                .item(getNextPageItem())
+                .clicked(event -> page = Math.min(maxPage, page - 1));
     }
 
     public boolean shouldDrawPaginatedButtons() {
