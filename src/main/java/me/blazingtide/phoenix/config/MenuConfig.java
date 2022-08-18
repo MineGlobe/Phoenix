@@ -1,7 +1,6 @@
 package me.blazingtide.phoenix.config;
 
 import lombok.Getter;
-import me.blazingtide.phoenix.config.builder.ConfigMenuBuilder;
 import me.blazingtide.phoenix.utils.PhoenixColorTranslator;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -18,6 +17,7 @@ public class MenuConfig {
     private final File file;
     @Getter
     private final FileConfiguration config;
+
     public MenuConfig(String filePath) {
         file = new File(filePath);
         config = YamlConfiguration.loadConfiguration(file);
@@ -42,10 +42,6 @@ public class MenuConfig {
 
         item.setItemMeta(meta);
         return item;
-    }
-
-    public static void constructDefaultConfig(String filePath) {
-
     }
 
 }
