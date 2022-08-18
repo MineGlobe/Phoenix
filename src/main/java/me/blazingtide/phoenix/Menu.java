@@ -5,6 +5,7 @@ import me.blazingtide.phoenix.button.Button;
 import me.blazingtide.phoenix.button.IButton;
 import me.blazingtide.phoenix.populator.ButtonPopulator;
 import me.blazingtide.phoenix.populator.ButtonPopulatorImpl;
+import me.blazingtide.phoenix.utils.ColorUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -31,8 +32,8 @@ public abstract class Menu {
     static Phoenix PHOENIX;
 
     protected final Player player;
-    protected final String title;
-    protected final int size;
+    protected String title;
+    protected int size;
 
     @Deprecated
     protected IButton[] buttons;
@@ -43,7 +44,7 @@ public abstract class Menu {
 
     public Menu(Player player, String title, int size) {
         this.player = player;
-        this.title = ChatColor.translateAlternateColorCodes('&', title);
+        this.title = ColorUtils.translateColors(title);
         this.size = size;
 
         buttons = new Button[size];

@@ -1,6 +1,7 @@
 package me.blazingtide.phoenix;
 
 import lombok.AllArgsConstructor;
+import me.blazingtide.phoenix.Menu;
 import me.blazingtide.phoenix.button.IButton;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
