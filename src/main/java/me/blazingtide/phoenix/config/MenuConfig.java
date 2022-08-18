@@ -1,7 +1,8 @@
 package me.blazingtide.phoenix.config;
 
 import lombok.Getter;
-import me.blazingtide.phoenix.utils.ColorUtils;
+import me.blazingtide.phoenix.config.builder.ConfigMenuBuilder;
+import me.blazingtide.phoenix.utils.PhoenixColorTranslator;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -30,8 +31,8 @@ public class MenuConfig {
         var item = new ItemStack(Material.valueOf(config.getString("type")));
         var meta = item.getItemMeta();
 
-        meta.setDisplayName(ColorUtils.translateColors(config.getString("name")));
-        meta.setLore(config.getStringList("lore").stream().map(ColorUtils::translateColors).toList());
+        meta.setDisplayName(PhoenixColorTranslator.translateColors(config.getString("name")));
+        meta.setLore(config.getStringList("lore").stream().map(PhoenixColorTranslator::translateColors).toList());
         if (config.isSet("customModelData")) {
             meta.setCustomModelData(config.getInt("customModelData"));
         }
@@ -41,6 +42,10 @@ public class MenuConfig {
 
         item.setItemMeta(meta);
         return item;
+    }
+
+    public static void constructDefaultConfig(String filePath) {
+
     }
 
 }

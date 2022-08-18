@@ -4,7 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 
 import java.util.regex.Pattern;
 
-public class ColorUtils {
+public class PhoenixColorTranslator {
 
     private static Pattern PATTERN = Pattern.compile("#[a-fA-F0-9]{6}");
 
