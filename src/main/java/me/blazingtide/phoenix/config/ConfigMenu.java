@@ -13,12 +13,10 @@ import java.util.function.Consumer;
 public class ConfigMenu extends Menu {
 
     private final MenuConfig config;
-    private final String filePath;
     private final Map<String, Consumer<InventoryClickEvent>> actions = Maps.newHashMap();
 
     public ConfigMenu(Player player, String filePath) {
         super(player, "", 0);
-        this.filePath = filePath;
 
         config = new MenuConfig(filePath);
         title = ColorUtils.translateColors(config.getConfig().getString("title"));
