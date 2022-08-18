@@ -5,6 +5,7 @@ import me.blazingtide.phoenix.button.Button;
 import me.blazingtide.phoenix.button.IButton;
 import me.blazingtide.phoenix.populator.ButtonPopulator;
 import me.blazingtide.phoenix.populator.ButtonPopulatorImpl;
+import me.blazingtide.phoenix.utils.PhoenixColorTranslator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -31,11 +32,11 @@ public abstract class Menu {
     static Phoenix PHOENIX;
 
     protected final Player player;
-    protected final String title;
-    protected final int size;
+    protected String title;
+    protected int size;
 
     @Deprecated
-    protected final IButton[] buttons;
+    protected IButton[] buttons;
 
     protected long lastTick;
 
@@ -43,7 +44,7 @@ public abstract class Menu {
 
     public Menu(Player player, String title, int size) {
         this.player = player;
-        this.title = ChatColor.translateAlternateColorCodes('&', title);
+        this.title = PhoenixColorTranslator.translateColors(title);
         this.size = size;
 
         buttons = new Button[size];
@@ -107,13 +108,9 @@ public abstract class Menu {
 
     /**
      * Updates the inventory for the player.
-     * It's final since we don't want anyone that's using the library
-     * to accidentally screw up the update sequence and slow down the entire
-     * library.
-     *
-     * <strong>REMINDER: This method is VERY async</strong>
      */
     public final void update() {
+        buttons = new IButton[size];
         draw();
         final List<IButton> array = Arrays.asList(this.buttons);
 
@@ -180,7 +177,7 @@ public abstract class Menu {
     /**
      * Returns the first empty slot in the inventory.
      * <p>
-     * Returns -1 if there's not slot empty.
+     * Returns -1 if there's no slot empty.
      *
      * @return slot
      */
