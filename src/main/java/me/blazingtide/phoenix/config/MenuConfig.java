@@ -17,7 +17,6 @@ public class MenuConfig {
     private final File file;
     @Getter
     private final FileConfiguration config;
-
     public MenuConfig(String filePath) {
         file = new File(filePath);
         config = YamlConfiguration.loadConfiguration(file);
