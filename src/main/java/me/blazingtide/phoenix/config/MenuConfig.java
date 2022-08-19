@@ -1,6 +1,7 @@
 package me.blazingtide.phoenix.config;
 
 import lombok.Getter;
+import me.blazingtide.phoenix.Phoenix;
 import me.blazingtide.phoenix.utils.PhoenixColorTranslator;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -28,6 +29,8 @@ public class MenuConfig {
     }
 
     public ItemStack constructItem(String path) {
+        var config = getConfig().getConfigurationSection(path);
+
         var item = new ItemStack(Material.valueOf(config.getString("type")));
         var meta = item.getItemMeta();
 
