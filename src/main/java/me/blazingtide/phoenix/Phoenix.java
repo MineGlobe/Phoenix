@@ -2,6 +2,7 @@ package me.blazingtide.phoenix;
 
 import com.google.common.collect.Maps;
 import lombok.Getter;
+import me.blazingtide.phoenix.config.MenuConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,8 +23,8 @@ public class Phoenix {
      * there are 0 complications.
      */
     private final Map<UUID, Menu> openMenus = Maps.newConcurrentMap();
+    private final Map<String, MenuConfig> menuConfigs = Maps.newConcurrentMap();
     private final JavaPlugin plugin;
-
     private final UpdaterThread updater;
 
     public Phoenix(JavaPlugin plugin) {
@@ -32,6 +33,16 @@ public class Phoenix {
 
         Bukkit.getPluginManager().registerEvents(new PhoenixListener(openMenus), plugin);
         Menu.PHOENIX = this;
+    }
+
+    public void registerMenuConfig(String path) {
+        menuConfigs.put(path, new MenuConfig(path));
+        plugin.getLogger().info("Registered new menu config for path " + path + ".");
+    }
+
+    public void registerMenuConfig(JavaPlugin plugin, String location) {
+        registerMenuConfig(plugin.getDataFolder().getPath() + "/" + location);
+        plugin.saveResource(location, false);
     }
 
 }

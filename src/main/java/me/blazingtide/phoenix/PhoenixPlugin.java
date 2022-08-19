@@ -4,7 +4,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class PhoenixPlugin extends JavaPlugin {
 
-    private Phoenix phoenix;
+    private static Phoenix phoenix;
+
+    public static Phoenix getPhoenix() {
+        return phoenix;
+    }
 
     @Override
     public void onEnable() {

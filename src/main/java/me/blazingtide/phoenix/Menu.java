@@ -29,7 +29,7 @@ public abstract class Menu {
      */
     private static final long REGULAR_UPDATE_TICK = TimeUnit.MILLISECONDS.toSeconds(1);
 
-    static Phoenix PHOENIX;
+    protected static Phoenix PHOENIX;
 
     protected final Player player;
     protected String title;

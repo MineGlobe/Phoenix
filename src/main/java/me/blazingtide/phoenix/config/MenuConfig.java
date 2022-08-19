@@ -1,6 +1,7 @@
 package me.blazingtide.phoenix.config;
 
 import lombok.Getter;
+import me.blazingtide.phoenix.Phoenix;
 import me.blazingtide.phoenix.utils.PhoenixColorTranslator;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -12,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.io.IOException;
 
-class MenuConfig {
+public class MenuConfig {
 
     private final File file;
     @Getter

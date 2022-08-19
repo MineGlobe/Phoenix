@@ -2,6 +2,7 @@ package me.blazingtide.phoenix.config;
 
 import com.google.common.collect.Maps;
 import me.blazingtide.phoenix.Menu;
+import me.blazingtide.phoenix.Phoenix;
 import me.blazingtide.phoenix.utils.PhoenixColorTranslator;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -19,7 +20,12 @@ public abstract class ConfigMenu extends Menu {
     public ConfigMenu(Player player, String filePath) {
         super(player, "", 0);
 
-        config = new MenuConfig(filePath);
+        if (!PHOENIX.getMenuConfigs().containsKey(filePath)) {
+            PHOENIX.getPlugin().getLogger().severe("Menu Config for file path " + filePath + " has not been registered! Please register in in the plugin's onEnable.");
+            PHOENIX.registerMenuConfig(filePath);
+        }
+
+        config = PHOENIX.getMenuConfigs().get(filePath);
         title = PhoenixColorTranslator.translateColors(config.getConfig().getString("title"));
         size = config.getConfig().getInt("size");
         defineActions();
