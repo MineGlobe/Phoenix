@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.io.IOException;
 
-public class MenuConfig {
+class MenuConfig {
 
     private final File file;
     @Getter
@@ -28,6 +28,8 @@ public class MenuConfig {
     }
 
     public ItemStack constructItem(String path) {
+        var config = getConfig().getConfigurationSection(path);
+
         var item = new ItemStack(Material.valueOf(config.getString("type")));
         var meta = item.getItemMeta();
 
