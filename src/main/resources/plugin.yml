@@ -1,4 +1,9 @@
 name: Phoenix
-version: 1.0
+version: ${git.branch}-${git.commit.id.abbrev}
 author: BlazingTide
 main: me.blazingtide.phoenix.PhoenixPlugin
+
+api-version: 1.13
+
+libraries:
+  - "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10"

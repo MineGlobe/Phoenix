@@ -10,8 +10,4 @@ public class PhoenixPlugin extends JavaPlugin {
         return phoenix;
     }
 
-    @Override
-    public void onEnable() {
-        phoenix = new Phoenix(this);
-    }
 }

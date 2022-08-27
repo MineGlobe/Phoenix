@@ -110,7 +110,7 @@ public abstract class Menu {
      * Updates the inventory for the player.
      */
     public final void update() {
-        buttons = new IButton[size];
+        clear();
         draw();
         final List<IButton> array = Arrays.asList(this.buttons);
 
