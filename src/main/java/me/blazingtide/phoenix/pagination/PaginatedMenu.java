@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.blazingtide.phoenix.Menu;
 import me.blazingtide.phoenix.button.Button;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -35,8 +36,6 @@ public abstract class PaginatedMenu extends Menu {
 
     @Override
     public void draw() {
-        clear();
-
         int start = (page - 1) * maxElements;
         int end = start + maxElements;
         final int[] slots = getSlots();
@@ -59,12 +58,30 @@ public abstract class PaginatedMenu extends Menu {
         populator()
                 .slot(size - 9)
                 .item(getPreviousPageItem())
-                .clicked(event -> page = Math.max(1, page - 1)).create();
+                .clicked(event -> {
+                    var oldPage = page;
+                    page = Math.max(1, page - 1);
+
+                    if (oldPage != page) {
+                        player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON, 1, 1);
+                        update();
+                    }
+                }).create();
 
         populator()
                 .slot(size - 1)
                 .item(getNextPageItem())
-                .clicked(event -> page = Math.min(maxPage, page - 1));
+                .clicked(event -> {
+                    var oldPage = page;
+
+                    page = Math.min(maxPage, page + 1);
+
+                    if (oldPage != page) {
+                        player.playSound(player.getLocation(), Sound.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON, 1, 1);
+                        update();
+                    }
+                }).create();
+
     }
 
     public boolean shouldDrawPaginatedButtons() {
