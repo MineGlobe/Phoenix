@@ -2,6 +2,7 @@ package me.blazingtide.phoenix
 
 import me.blazingtide.phoenix.button.IButton
 import me.blazingtide.phoenix.config.ConfigMenu
+import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
