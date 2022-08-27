@@ -19,21 +19,3 @@ inline fun ConfigMenu.defineAction(id: String, crossinline handler: InventoryCli
         handler.invoke(it)
     }
 }
-
-
-/*
-
-val menu = Menu {
-    title("Something")
-    size(MenuSize.ROWS_6)
-
-    drawButtons {
-        button(item, slot) {
-            //Do stuff
-        }
-    }
-}
-
-val configMenu = ConfigMenu("location").open()
-
- */
