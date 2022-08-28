@@ -2,7 +2,7 @@ package me.blazingtide.phoenix.config;
 
 import com.google.common.collect.Maps;
 import me.blazingtide.phoenix.Menu;
-import me.blazingtide.phoenix.Phoenix;
+import me.blazingtide.phoenix.button.Button;
 import me.blazingtide.phoenix.utils.PhoenixColorTranslator;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -28,6 +28,8 @@ public abstract class ConfigMenu extends Menu {
         config = PHOENIX.getMenuConfigs().get(filePath);
         title = PhoenixColorTranslator.translateColors(config.getConfig().getString("title"));
         size = config.getConfig().getInt("size");
+
+        buttons = new Button[size];
         defineActions();
     }
 
