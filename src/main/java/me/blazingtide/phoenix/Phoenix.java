@@ -6,6 +6,7 @@ import me.blazingtide.phoenix.config.MenuConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.Map;
 import java.util.UUID;
 
@@ -42,7 +43,9 @@ public class Phoenix {
 
     public void registerMenuConfig(JavaPlugin plugin, String location) {
         registerMenuConfig(plugin.getDataFolder().getPath() + "/" + location);
-        plugin.saveResource(location, false);
+        if (plugin.getResource(location) != null && !(new File(plugin.getDataFolder(), location).exists())) {
+            plugin.saveResource(location, false);
+        }
     }
 
 }
