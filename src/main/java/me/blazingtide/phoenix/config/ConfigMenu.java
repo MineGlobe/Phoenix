@@ -43,6 +43,10 @@ public abstract class ConfigMenu extends Menu {
         actions.put(id, consumer);
     }
 
+    public void handleAllActions(String action, InventoryClickEvent event) {
+
+    }
+
     @Override
     public void draw() {
         for (String key : config.getConfig().getConfigurationSection("items").getKeys(false)) {
@@ -57,6 +61,8 @@ public abstract class ConfigMenu extends Menu {
                         if (actions.containsKey(action)) {
                             actions.get(action).accept(event);
                         }
+
+                        handleAllActions(action, event);
                     })
                     .create();
         }
