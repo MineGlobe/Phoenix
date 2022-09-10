@@ -12,7 +12,7 @@ public interface ButtonPopulator {
 
     ButtonPopulator menu(Menu menu);
 
-    ButtonPopulator slot(int slot);
+    ButtonPopulator slot(int... slots);
 
     ButtonPopulator player(Player player);
 

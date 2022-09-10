@@ -52,8 +52,14 @@ public abstract class ConfigMenu extends Menu {
         for (String key : config.getConfig().getConfigurationSection("items").getKeys(false)) {
             final ItemStack item = config.constructItem("items." + key);
 
+            int[] slots = new int[]{config.getConfig().getInt("items." + key + ".slot")};
+
+            if (config.getConfig().isSet("items." + key + ".slots")) {
+                slots = config.getConfig().getIntegerList("items." + key + ".slots").stream().mapToInt(i -> i).toArray();
+            }
+
             populator()
-                    .slot(config.getConfig().getInt("items." + key + ".slot"))
+                    .slot(slots)
                     .item(item)
                     .clicked(event -> {
                         final String action = config.getConfig().getString("items." + key + ".clickAction");
