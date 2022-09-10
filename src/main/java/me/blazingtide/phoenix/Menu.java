@@ -60,7 +60,7 @@ public abstract class Menu {
 
     /**
      * Called whenever the GUI is ready to update.
-     * The correct usage would be to return a Optional of ERROR on error
+     * The correct usage would be to return an Optional of ERROR on error
      * and to set the buttons to update the GUI
      * <p>
      * Usage:
@@ -112,9 +112,13 @@ public abstract class Menu {
     public final void update() {
         clear();
         draw();
-        final List<IButton> array = Arrays.asList(this.buttons);
+        for (int i = 0; i < buttons.length; i++) {
+            final IButton button = buttons[i];
 
-        array.stream().filter(Objects::nonNull).forEachOrdered(button -> inventory.setItem(array.indexOf(button), button.getItem()));
+            if (button != null) {
+                inventory.setItem(i, button.getItem());
+            }
+        }
         lastTick = System.currentTimeMillis();
     }
 

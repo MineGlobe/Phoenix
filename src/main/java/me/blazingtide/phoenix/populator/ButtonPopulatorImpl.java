@@ -8,12 +8,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Consumer;
 
 public class ButtonPopulatorImpl implements ButtonPopulator {
 
-    private int[] slot;
+    private int[] slots;
     private ItemStack item;
     private Consumer<InventoryClickEvent> consumer = ignored -> {
     };
@@ -29,7 +30,7 @@ public class ButtonPopulatorImpl implements ButtonPopulator {
 
     @Override
     public ButtonPopulator slot(int... slots) {
-        this.slot = slots;
+        this.slots = slots;
         return this;
     }
 
@@ -68,7 +69,7 @@ public class ButtonPopulatorImpl implements ButtonPopulator {
                 .build(player);
 
 
-        for (int i : slot) {
+        for (int i : this.slots) {
             menu.getButtons()[i] = button;
         }
 

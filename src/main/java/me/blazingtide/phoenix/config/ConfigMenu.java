@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import me.blazingtide.phoenix.Menu;
 import me.blazingtide.phoenix.button.Button;
 import me.blazingtide.phoenix.utils.PhoenixColorTranslator;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -49,26 +50,32 @@ public abstract class ConfigMenu extends Menu {
 
     @Override
     public void draw() {
-        for (String key : config.getConfig().getConfigurationSection("items").getKeys(false)) {
-            final ItemStack item = config.constructItem("items." + key);
+        final FileConfiguration config = this.config.getConfig();
 
-            int[] slots = new int[]{config.getConfig().getInt("items." + key + ".slot")};
+        for (String key : config.getConfigurationSection("items").getKeys(false)) {
+            final ItemStack item = this.config.constructItem("items." + key);
 
-            if (config.getConfig().isSet("items." + key + ".slots")) {
-                slots = config.getConfig().getIntegerList("items." + key + ".slots").stream().mapToInt(i -> i).toArray();
+            int[] slots;
+
+            if (config.isSet("items." + key + ".slots")) {
+                slots = config.getIntegerList("items." + key + ".slots").stream().mapToInt(i -> i).toArray();
+            } else {
+                slots = new int[]{config.getInt("items." + key + ".slot")};
             }
 
             populator()
                     .slot(slots)
                     .item(item)
                     .clicked(event -> {
-                        final String action = config.getConfig().getString("items." + key + ".clickAction");
+                        final String action = config.getString("items." + key + ".clickAction");
 
                         if (actions.containsKey(action)) {
                             actions.get(action).accept(event);
                         }
 
-                        handleAllActions(action, event);
+                        if (action != null) {
+                            handleAllActions(action, event);
+                        }
                     })
                     .create();
         }
