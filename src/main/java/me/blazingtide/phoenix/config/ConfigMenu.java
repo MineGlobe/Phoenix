@@ -67,6 +67,18 @@ public abstract class ConfigMenu extends Menu {
                     .slot(slots)
                     .item(item)
                     .clicked(event -> {
+                        if (!config.getStringList("items." + key + ".clickAction").isEmpty()) {
+                            config.getStringList("items." + key + ".clickAction").forEach(action -> {
+                                if (actions.containsKey(action)) {
+                                    actions.get(action).accept(event);
+                                }
+
+                                handleAllActions(action, event);
+                            });
+
+                            return;
+                        }
+
                         final String action = config.getString("items." + key + ".clickAction");
 
                         if (actions.containsKey(action)) {

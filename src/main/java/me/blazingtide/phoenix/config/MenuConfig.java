@@ -34,6 +34,7 @@ public class MenuConfig {
         var item = new ItemStack(Material.valueOf(config.getString("type")));
         var meta = item.getItemMeta();
 
+        item.setAmount(config.getInt("amount", 1));
         meta.setDisplayName(PhoenixColorTranslator.translateColors(config.getString("name")));
         meta.setLore(config.getStringList("lore").stream().map(PhoenixColorTranslator::translateColors).toList());
         if (config.isSet("customModelData")) {
