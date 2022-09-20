@@ -67,50 +67,37 @@ public abstract class ConfigMenu extends Menu {
         final FileConfiguration config = this.config.getConfig();
 
         for (String key : config.getConfigurationSection("items").getKeys(false)) {
+            final ConfigurationSection section = config.getConfigurationSection("items." + key);
             final ItemStack item = this.config.constructItem("items." + key);
 
-            int[] slots;
-
-            if (config.isSet("items." + key + ".slots")) {
-                slots = config.getIntegerList("items." + key + ".slots").stream().mapToInt(i -> i).toArray();
-            } else {
-                slots = new int[]{config.getInt("items." + key + ".slot")};
-            }
+            int[] slots = section.isSet("slots") ?
+                    section.getIntegerList("slots").stream().mapToInt(Integer::intValue).toArray() :
+                    new int[]{section.getInt("slot")};
 
             populator()
                     .slot(slots)
                     .item(item)
                     .clicked(event -> {
-                        if (!config.isSet("items." + key + ".clickAction")) return;
+                        if (!section.isSet("clickAction")) return;
 
-                        final List<String> clickActions = config.getStringList("items." + key + ".clickAction");
+                        final List<String> clickActions = section.getStringList("clickAction");
 
                         if (clickActions.size() == 0) {
-                            clickActions.add(config.getString("items." + key + ".clickAction"));
+                            clickActions.add(section.getString("clickAction"));
                         }
 
                         clickActions.forEach(action -> {
-                            var result = handleButtonClick(new ConfigButtonReference<>() {
-                                @Override
-                                public InventoryClickEvent getEvent() {
-                                    return event;
-                                }
+                            var result = handleButtonClick(ConfigButtonReference.of(event, section));
 
-                                @Override
-                                public ConfigurationSection getSection() {
-                                    return config.getConfigurationSection("items." + key);
-                                }
-                            });
-                            if (result) {
-                                if (actions.containsKey(action)) {
-                                    actions.get(action).accept(event);
-                                }
+                            if (!result) return;
 
-                                handleAllActions(action, event);
+                            if (actions.containsKey(action)) {
+                                actions.get(action).accept(event);
                             }
+
+                            handleAllActions(action, event);
                         });
-                    })
-                    .create();
+                    }).create();
         }
     }
 }

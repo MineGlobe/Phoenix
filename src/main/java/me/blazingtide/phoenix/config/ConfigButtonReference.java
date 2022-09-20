@@ -9,4 +9,18 @@ public interface ConfigButtonReference<T extends Event, K extends ConfigurationS
 
     K getSection();
 
+    static <T extends Event, K extends ConfigurationSection> ConfigButtonReference<T, K> of(T event, K section) {
+        return new ConfigButtonReference<T, K>() {
+            @Override
+            public T getEvent() {
+                return event;
+            }
+
+            @Override
+            public K getSection() {
+                return section;
+            }
+        };
+    }
+
 }
