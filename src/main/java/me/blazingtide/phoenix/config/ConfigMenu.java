@@ -101,11 +101,13 @@ public abstract class ConfigMenu extends Menu {
                                     return config.getConfigurationSection("items." + key);
                                 }
                             });
-                            if (actions.containsKey(action)) {
-                                actions.get(action).accept(event);
-                            }
+                            if (result) {
+                                if (actions.containsKey(action)) {
+                                    actions.get(action).accept(event);
+                                }
 
-                            handleAllActions(action, event);
+                                handleAllActions(action, event);
+                            }
                         });
                     })
                     .create();
