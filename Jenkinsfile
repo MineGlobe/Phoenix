@@ -1,13 +1,27 @@
-node {
-   stage('Clone') {
-      checkout scm
-   }
+pipeline {
+    agent any
 
-   stage('Build') {
-       sh "/var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/maven/bin/mvn clean install -U"
-   }
-   
-   stage('Archive') {
-      archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
-   }
+    tools {
+        maven 'Maven 3.8.6'
+    }
+
+    stages {
+        stage('Clone') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh "mvn clean install -U"
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            }
+        }
+    }
 }
