@@ -15,8 +15,6 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Getter
@@ -59,8 +57,25 @@ public abstract class Menu {
     }
 
     /**
+     * Inserts a button into the GUI at a specific slot.
+     * <p>
+     * If the slot is already occupied, it will be replaced.
+     * If the slot is out of bounds, it will be ignored.
+     * If the button is null, it will be ignored.
+     * </p>
+     *
+     * @param button the button to insert
+     * @param slots  the slots to insert the button into
+     */
+    public void insertButton(IButton button, int... slots) {
+        if (button == null) return;
+
+        Arrays.stream(slots).filter(slot -> slot >= 0 && slot < size).forEach(slot -> buttons[slot] = button);
+    }
+
+    /**
      * Called whenever the GUI is ready to update.
-     * The correct usage would be to return a Optional of ERROR on error
+     * The correct usage would be to return an Optional of ERROR on error
      * and to set the buttons to update the GUI
      * <p>
      * Usage:
@@ -112,9 +127,13 @@ public abstract class Menu {
     public final void update() {
         clear();
         draw();
-        final List<IButton> array = Arrays.asList(this.buttons);
+        for (int i = 0; i < buttons.length; i++) {
+            final IButton button = buttons[i];
 
-        array.stream().filter(Objects::nonNull).forEachOrdered(button -> inventory.setItem(array.indexOf(button), button.getItem()));
+            if (button != null) {
+                inventory.setItem(i, button.getItem());
+            }
+        }
         lastTick = System.currentTimeMillis();
     }
 
@@ -139,7 +158,7 @@ public abstract class Menu {
         if (PHOENIX != null) {
             PHOENIX.getOpenMenus().put(player.getUniqueId(), this);
         } else {
-            PHOENIX.getPlugin().getLogger().severe("[Phoenix] Attempted to open a GUI without having Phoenix initialized.");
+            PHOENIX.getPlugin().getLogger().severe("Attempted to open a GUI without having Phoenix initialized.");
         }
     }
 

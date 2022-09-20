@@ -2,13 +2,16 @@ package me.blazingtide.phoenix.config;
 
 import com.google.common.collect.Maps;
 import me.blazingtide.phoenix.Menu;
-import me.blazingtide.phoenix.Phoenix;
+import me.blazingtide.phoenix.button.Button;
 import me.blazingtide.phoenix.utils.PhoenixColorTranslator;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -28,6 +31,8 @@ public abstract class ConfigMenu extends Menu {
         config = PHOENIX.getMenuConfigs().get(filePath);
         title = PhoenixColorTranslator.translateColors(config.getConfig().getString("title"));
         size = config.getConfig().getInt("size");
+
+        buttons = new Button[size];
         defineActions();
     }
 
@@ -41,22 +46,58 @@ public abstract class ConfigMenu extends Menu {
         actions.put(id, consumer);
     }
 
+    /**
+     * Handles all button clicks and provides a reference to the event & configuration section.
+     * <p>
+     * Return false if click events shouldn't be handled
+     *
+     * @param reference the reference
+     * @return true if click events should be handled
+     */
+    public boolean handleButtonClick(ConfigButtonReference<InventoryClickEvent, ConfigurationSection> reference) {
+        return true;
+    }
+
+    public void handleAllActions(String action, InventoryClickEvent event) {
+
+    }
+
     @Override
     public void draw() {
-        for (String key : config.getConfig().getConfigurationSection("items").getKeys(false)) {
-            final ItemStack item = config.constructItem("items." + key);
+        final FileConfiguration config = this.config.getConfig();
+
+        for (String key : config.getConfigurationSection("items").getKeys(false)) {
+            final ConfigurationSection section = config.getConfigurationSection("items." + key);
+            final ItemStack item = this.config.constructItem("items." + key);
+
+            int[] slots = section.isSet("slots") ?
+                    section.getIntegerList("slots").stream().mapToInt(Integer::intValue).toArray() :
+                    new int[]{section.getInt("slot")};
 
             populator()
-                    .slot(config.getConfig().getInt("items." + key + ".slot"))
+                    .slot(slots)
                     .item(item)
                     .clicked(event -> {
-                        final String action = config.getConfig().getString("items." + key + ".clickAction");
+                        if (!section.isSet("clickAction")) return;
 
-                        if (actions.containsKey(action)) {
-                            actions.get(action).accept(event);
+                        final List<String> clickActions = section.getStringList("clickAction");
+
+                        if (clickActions.size() == 0) {
+                            clickActions.add(section.getString("clickAction"));
                         }
-                    })
-                    .create();
+
+                        clickActions.forEach(action -> {
+                            var result = handleButtonClick(ConfigButtonReference.of(event, section));
+
+                            if (!result) return;
+
+                            if (actions.containsKey(action)) {
+                                actions.get(action).accept(event);
+                            }
+
+                            handleAllActions(action, event);
+                        });
+                    }).create();
         }
     }
 }

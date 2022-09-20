@@ -1,6 +1,7 @@
 package me.blazingtide.phoenix.populator;
 
 import me.blazingtide.phoenix.Menu;
+import me.blazingtide.phoenix.button.Button;
 import me.blazingtide.phoenix.button.IButton;
 import me.blazingtide.phoenix.button.builder.ButtonBuilder;
 import org.bukkit.entity.Player;
@@ -12,7 +13,7 @@ import java.util.function.Consumer;
 
 public class ButtonPopulatorImpl implements ButtonPopulator {
 
-    private int slot;
+    private int[] slots;
     private ItemStack item;
     private Consumer<InventoryClickEvent> consumer = ignored -> {
     };
@@ -27,8 +28,8 @@ public class ButtonPopulatorImpl implements ButtonPopulator {
     }
 
     @Override
-    public ButtonPopulator slot(int slot) {
-        this.slot = slot;
+    public ButtonPopulator slot(int... slots) {
+        this.slots = slots;
         return this;
     }
 
@@ -60,10 +61,13 @@ public class ButtonPopulatorImpl implements ButtonPopulator {
         Objects.requireNonNull(menu, "Menu is null");
         Objects.requireNonNull(item, "Item is null");
 
-        return menu.getButtons()[slot] = new ButtonBuilder()
+        final Button button = new ButtonBuilder()
                 .withGUI(menu)
                 .withItem(item)
                 .onClick(consumer)
                 .build(player);
+
+        menu.insertButton(button, slots);
+        return button;
     }
 }
