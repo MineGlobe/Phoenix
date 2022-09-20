@@ -34,6 +34,12 @@ public class MenuConfig {
         item.setAmount(config.getInt("amount", 1));
         meta.setDisplayName(PhoenixColorTranslator.translateColors(config.getString("name")));
         meta.setLore(config.getStringList("lore").stream().map(PhoenixColorTranslator::translateColors).toList());
+
+//        if (item.getType() == Material.PLAYER_HEAD && config.isSet("base64head")) {
+//            var skullMeta = (SkullMeta) meta;
+//
+//        }
+
         if (config.isSet("customModelData")) {
             meta.setCustomModelData(config.getInt("customModelData"));
         }

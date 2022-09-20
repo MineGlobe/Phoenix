@@ -4,12 +4,14 @@ import com.google.common.collect.Maps;
 import me.blazingtide.phoenix.Menu;
 import me.blazingtide.phoenix.button.Button;
 import me.blazingtide.phoenix.utils.PhoenixColorTranslator;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -44,6 +46,18 @@ public abstract class ConfigMenu extends Menu {
         actions.put(id, consumer);
     }
 
+    /**
+     * Handles all button clicks and provides a reference to the event & configuration section.
+     * <p>
+     * Return false if click events shouldn't be handled
+     *
+     * @param reference the reference
+     * @return true if click events should be handled
+     */
+    public boolean handleButtonClick(ConfigButtonReference<InventoryClickEvent, ConfigurationSection> reference) {
+        return true;
+    }
+
     public void handleAllActions(String action, InventoryClickEvent event) {
 
     }
@@ -67,27 +81,32 @@ public abstract class ConfigMenu extends Menu {
                     .slot(slots)
                     .item(item)
                     .clicked(event -> {
-                        if (!config.getStringList("items." + key + ".clickAction").isEmpty()) {
-                            config.getStringList("items." + key + ".clickAction").forEach(action -> {
-                                if (actions.containsKey(action)) {
-                                    actions.get(action).accept(event);
+                        if (!config.isSet("items." + key + ".clickAction")) return;
+
+                        final List<String> clickActions = config.getStringList("items." + key + ".clickAction");
+
+                        if (clickActions.size() == 0) {
+                            clickActions.add(config.getString("items." + key + ".clickAction"));
+                        }
+
+                        clickActions.forEach(action -> {
+                            var result = handleButtonClick(new ConfigButtonReference<>() {
+                                @Override
+                                public InventoryClickEvent getEvent() {
+                                    return event;
                                 }
 
-                                handleAllActions(action, event);
+                                @Override
+                                public ConfigurationSection getSection() {
+                                    return config.getConfigurationSection("items." + key);
+                                }
                             });
+                            if (actions.containsKey(action)) {
+                                actions.get(action).accept(event);
+                            }
 
-                            return;
-                        }
-
-                        final String action = config.getString("items." + key + ".clickAction");
-
-                        if (actions.containsKey(action)) {
-                            actions.get(action).accept(event);
-                        }
-
-                        if (action != null) {
                             handleAllActions(action, event);
-                        }
+                        });
                     })
                     .create();
         }

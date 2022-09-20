@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -68,11 +67,7 @@ public class ButtonPopulatorImpl implements ButtonPopulator {
                 .onClick(consumer)
                 .build(player);
 
-
-        for (int i : this.slots) {
-            menu.getButtons()[i] = button;
-        }
-
+        menu.insertButton(button, slots);
         return button;
     }
 }
