@@ -1,1 +1,17 @@
-/.idea/
+# IntelliJ
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+shared/target/
+bukkit/target/
+dependency-reduced-pom.xml
+
+# Java
+*.jar

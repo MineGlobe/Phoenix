@@ -5,6 +5,7 @@ import me.blazingtide.phoenix.button.Button;
 import me.blazingtide.phoenix.button.IButton;
 import me.blazingtide.phoenix.populator.ButtonPopulator;
 import me.blazingtide.phoenix.populator.ButtonPopulatorImpl;
+import me.blazingtide.phoenix.utils.InventoryUpdate;
 import me.blazingtide.phoenix.utils.PhoenixColorTranslator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -160,6 +161,15 @@ public abstract class Menu {
         } else {
             PHOENIX.getPlugin().getLogger().severe("Attempted to open a GUI without having Phoenix initialized.");
         }
+    }
+
+
+    /**
+     * Updates the title of the current menu
+     */
+    public final void updateTitle(String text) {
+        this.title = PhoenixColorTranslator.translateColors(text);
+        InventoryUpdate.updateInventory(PHOENIX.getPlugin(), this.player, this.title);
     }
 
     /**
