@@ -148,10 +148,6 @@ public abstract class Menu {
     public final void open() {
         inventory = createInventory();
 
-        if (player.getOpenInventory() == null || player.getOpenInventory().getTopInventory() == null) {
-            player.closeInventory(); //call close inventory first
-        }
-
         update();
 
         player.openInventory(inventory);
