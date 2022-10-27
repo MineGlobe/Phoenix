@@ -3,7 +3,7 @@ package me.blazingtide.phoenix.pagination;
 import lombok.Getter;
 import lombok.Setter;
 import me.blazingtide.phoenix.Menu;
-import me.blazingtide.phoenix.button.Button;
+import me.blazingtide.phoenix.button.IButton;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +17,7 @@ public abstract class PaginatedMenu extends Menu {
     private int maxPage;
     private int maxElements;
     protected int page = 1;
-    private List<Button> elements;
+    private List<IButton> elements;
 
     public PaginatedMenu(Player player, String title) {
         this(player, title, 18);
@@ -32,7 +32,7 @@ public abstract class PaginatedMenu extends Menu {
         maxPage = elements.size() / maxElements + 1;
     }
 
-    public abstract List<Button> getPageButtons();
+    public abstract List<IButton> getPageButtons();
 
     @Override
     public void draw() {
