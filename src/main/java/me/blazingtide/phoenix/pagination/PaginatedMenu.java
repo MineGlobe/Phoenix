@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
 @Setter
@@ -40,13 +41,20 @@ public abstract class PaginatedMenu extends Menu {
         int end = start + maxElements;
         final int[] slots = getSlots();
 
-        int index = 0;
-        for (int i = start; i < end; i++) {
-            if (elements.size() <= i) {
-                continue;
-            }
-            buttons[slots[index]] = elements.get(i);
-            index++;
+        final AtomicInteger index = new AtomicInteger();
+
+
+        if (elements.size() >= start) {
+            elements
+                    .stream()
+                    .skip(start)
+                    .limit(end)
+                    .forEachOrdered(button -> {
+                        if (button != null) {
+                            insertButton(button, slots[index.getAndIncrement()]);
+                        }
+                    });
+
         }
 
         if (shouldDrawPaginatedButtons()) {
