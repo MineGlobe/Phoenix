@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Setter
 public abstract class PaginatedMenu extends Menu {
 
-    private int maxPage;
+    protected int maxPage;
     private int maxElements;
     protected int page = 1;
     private List<IButton> elements;

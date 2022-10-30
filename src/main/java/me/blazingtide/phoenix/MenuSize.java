@@ -14,6 +14,6 @@ public enum MenuSize {
     ROWS_5(9 * 5),
     ROWS_6(9 * 6),;
 
-    private int value;
+    public int value;
 
 }
