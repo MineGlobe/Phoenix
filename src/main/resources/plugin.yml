@@ -6,4 +6,4 @@ main: me.blazingtide.phoenix.PhoenixPlugin
 api-version: 1.13
 
 libraries:
-  - "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10"
+  - "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20"
