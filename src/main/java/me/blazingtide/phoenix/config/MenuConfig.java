@@ -1,6 +1,8 @@
 package me.blazingtide.phoenix.config;
 
 import lombok.Getter;
+import me.blazingtide.phoenix.Phoenix;
+import me.blazingtide.phoenix.PhoenixPlugin;
 import me.blazingtide.phoenix.utils.PhoenixColorTranslator;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -31,23 +33,28 @@ public class MenuConfig {
         var item = new ItemStack(Material.valueOf(config.getString("type")));
         var meta = item.getItemMeta();
 
-        item.setAmount(config.getInt("amount", 1));
-        meta.setDisplayName(PhoenixColorTranslator.translateColors(config.getString("name")));
-        meta.setLore(config.getStringList("lore").stream().map(PhoenixColorTranslator::translateColors).toList());
+        try {
+            item.setAmount(config.getInt("amount", 1));
+            meta.setDisplayName(PhoenixColorTranslator.translateColors(config.getString("name")));
+            meta.setLore(config.getStringList("lore").stream().map(PhoenixColorTranslator::translateColors).toList());
 
 //        if (item.getType() == Material.PLAYER_HEAD && config.isSet("base64head")) {
 //            var skullMeta = (SkullMeta) meta;
 //
 //        }
 
-        if (config.isSet("customModelData")) {
-            meta.setCustomModelData(config.getInt("customModelData"));
-        }
-        if (config.isSet("flags")) {
-            meta.addItemFlags(config.getStringList("flags").stream().map(ItemFlag::valueOf).toList().toArray(new ItemFlag[0]));
-        }
+            if (config.isSet("customModelData")) {
+                meta.setCustomModelData(config.getInt("customModelData"));
+            }
+            if (config.isSet("flags")) {
+                meta.addItemFlags(config.getStringList("flags").stream().map(ItemFlag::valueOf).toList().toArray(new ItemFlag[0]));
+            }
 
-        item.setItemMeta(meta);
+            item.setItemMeta(meta);
+        } catch (Exception e) {
+            PhoenixPlugin.getPhoenix().getPlugin().getLogger().severe("Failed to construct item for path " + path + " in menu config " + file.getPath());
+            e.printStackTrace();
+        }
         return item;
     }
 
