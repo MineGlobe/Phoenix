@@ -186,6 +186,7 @@ public abstract class Menu {
      * You'll have to update the menu manually.
      */
     public void clear() {
+        inventory.clear();
         Arrays.fill(buttons, null);
     }
 
